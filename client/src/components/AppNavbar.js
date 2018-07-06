@@ -11,6 +11,8 @@ import {
     Container
 } from 'reactstrap';
 
+import { Link } from 'react-router-dom';
+
 class AppNavbar extends Component {
 
     
@@ -30,7 +32,10 @@ class AppNavbar extends Component {
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
-                        <NavbarBrand href="/">ShoppingList</NavbarBrand>
+                        <Link exact to="/">
+                            <NavbarBrand href="/">ShoppingList</NavbarBrand>
+                        </Link>
+                        
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
@@ -38,7 +43,17 @@ class AppNavbar extends Component {
                                     <NavLink href="https://github.com/imnotteixeira">
                                         Github
                                     </NavLink>
+                                    
                                 </NavItem>
+                                
+                                <Link exact to="/hw">
+                                    <NavItem>
+                                        <NavLink href="/hw">
+                                            HW
+                                        </NavLink>
+                                    </NavItem>
+                                </Link>
+
                             </Nav>
                         </Collapse>
                     </Container>
