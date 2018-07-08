@@ -1,4 +1,4 @@
-import { GET_TODOS, ADD_TODO, DELETE_TODO, TODOS_LOADING } from './types';
+import { GET_TODOS, ADD_TODO, DELETE_TODO, CHECK_TODO, TODOS_LOADING } from './types';
 
 export const getTodos = () => dispatch => {
     dispatch(setTodosLoading());
@@ -31,13 +31,25 @@ export const addTodo = todo => dispatch => {
 }
 
 export const deleteTodo = id => dispatch =>{
-    fetch(`/api/todoss/${id} `, {
+    fetch(`/api/todos/${id} `, {
         method: 'DELETE'
     })
     .then(res => res.json())
     .then(data =>
         dispatch({
             type: DELETE_TODO,
+            payload: id
+        }))
+}
+
+export const checkTodo = id => dispatch =>{
+    fetch(`/api/todos/${id} `, {
+        method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data =>
+        dispatch({
+            type: CHECK_TODO,
             payload: id
         }))
 }

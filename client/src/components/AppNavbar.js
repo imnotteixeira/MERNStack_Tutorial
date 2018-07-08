@@ -48,7 +48,7 @@ class AppNavbar extends Component {
                                 
                                 <Link exact to="/todo">
                                     <NavItem>
-                                        <NavLink href="/todo">
+                                        <NavLink href="todo">
                                             To-Do List
                                         </NavLink>
                                     </NavItem>

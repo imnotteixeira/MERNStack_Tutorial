@@ -1,4 +1,4 @@
-import { GET_TODOS, ADD_TODO, DELETE_TODO, TODOS_LOADING } from '../actions/types';
+import { GET_TODOS, ADD_TODO, DELETE_TODO, TODOS_LOADING, CHECK_TODO } from '../actions/types';
 
 const initialState = {
     items: [],
@@ -22,6 +22,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 items: [action.payload, ...state.items]
+            }
+        case CHECK_TODO:
+            let checkedTodo = state.items.filter(item => item._id === action.payload)[0];
+            console.log(checkedTodo);
+            checkedTodo.done = true;
+            return {
+                ...state,
+                items: [...state.items.filter(item => item._id !== action.payload), checkedTodo]
             }
         case TODOS_LOADING:
             return {

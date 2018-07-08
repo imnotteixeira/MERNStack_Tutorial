@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getTodos, deleteTodo } from '../actions/todoActions';
+import { getTodos, deleteTodo, checkTodo } from '../actions/todoActions';
 import PropTypes from 'prop-types';
 
 class TodoList extends Component {
@@ -15,16 +15,22 @@ class TodoList extends Component {
         this.props.deleteTodo(id);
     }
 
+    onDoneClick = id => {
+        this.props.checkTodo(id);
+    }
+
     render(){
         const { items } = this.props.todolist;
         return(
             <Container>
                 
                 <ListGroup>
-                    <TransitionGroup className = "shopping-list">
-                        {items.map(({ _id, name }) => (
+                    <TransitionGroup className = "todo-list">
+                        {items.map(({ _id, title, content, done }) => (
                             <CSSTransition key={_id} timeout={500} classNames="fade">
-                                <ListGroupItem>
+                                <ListGroupItem
+                                    color={done ? "success" : "danger"}
+                                >
                                     <Button
                                         className="remove-btn"
                                         color="danger"
@@ -33,7 +39,18 @@ class TodoList extends Component {
                                     >
                                         &times;
                                     </Button>
-                                    {name}
+                                    
+                                    {title} - {content}
+
+                                    {!done ? 
+                                    <Button
+                                        className="done-btn"
+                                        color="success"
+                                        size="sm"
+                                        onClick = {this.onDoneClick.bind(this, _id)}
+                                    >
+                                        &loz;
+                                    </Button> : ""}
                                 </ListGroupItem>
                             </CSSTransition>
                         ))}
@@ -47,7 +64,7 @@ class TodoList extends Component {
 TodoList.propTypes = {
     getTodos: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired
+    todolist: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -56,5 +73,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, 
                         { getTodos, 
-                          deleteTodo
+                          deleteTodo,
+                          checkTodo
                         })(TodoList);
